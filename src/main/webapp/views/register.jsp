@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng nhập tài khoản</title>
+    <title>Đăng ký tài khoản</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -15,36 +15,35 @@
             align-items: center;
             justify-content: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 20px;
+            padding: 30px 20px;
         }
-        .login-card {
+        .register-card {
             background: #ffffff;
             border-radius: 24px;
-            padding: 40px;
+            padding: 35px;
             width: 100%;
-            max-width: 440px;
+            max-width: 480px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
         .header-icon {
-            width: 65px;
-            height: 65px;
+            width: 60px;
+            height: 60px;
             background: #ffffff;
             color: #2563eb;
-            border-radius: 20px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            margin: 0 auto 15px auto;
+            font-size: 26px;
+            margin: 0 auto 12px auto;
             box-shadow: 0 8px 16px rgba(0,0,0,0.1);
         }
         .form-control {
             background-color: #f1f5f9;
             border: 1.5px solid transparent;
             border-radius: 12px;
-            padding: 12px 16px;
-            font-size: 15px;
-            transition: all 0.2s;
+            padding: 10px 14px;
+            font-size: 14.5px;
         }
         .form-control:focus {
             background-color: #ffffff;
@@ -64,63 +63,49 @@
             background: #1d4ed8;
             transform: translateY(-1px);
         }
-        .custom-link {
-            color: #2563eb;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        .custom-link:hover {
-            text-decoration: underline;
-            color: #1d4ed8;
-        }
     </style>
 </head>
 <body>
 
 <div>
-    <div class="text-center text-white mb-4">
+    <div class="text-center text-white mb-3">
         <div class="header-icon">
-            <i class="fa-solid fa-graduation-cap"></i>
+            <i class="fa-solid fa-user-plus"></i>
         </div>
-        <h3 class="fw-bold mb-1">Cổng Thông Tin Đăng Nhập</h3>
-        <p class="mb-0 text-white-50">Hệ Thống Quản Trị Trực Tuyến</p>
+        <h4 class="fw-bold mb-1">Tạo Tài Khoản Mới</h4>
+        <p class="mb-0 text-white-50" style="font-size: 14px;">Nhận mã OTP kích hoạt qua Email</p>
     </div>
 
-    <div class="login-card">
-        <h4 class="text-center fw-bold text-dark mb-4">Đăng nhập tài khoản</h4>
-
+    <div class="register-card">
         <% if (request.getAttribute("error") != null) { %>
             <div class="alert alert-danger py-2 text-center" style="font-size: 14px; border-radius: 10px;">
                 <i class="fa-solid fa-circle-exclamation me-1"></i> <%= request.getAttribute("error") %>
             </div>
         <% } %>
-        <% if ("active_success".equals(request.getParameter("msg"))) { %>
-            <div class="alert alert-success py-2 text-center" style="font-size: 14px; border-radius: 10px;">
-                <i class="fa-solid fa-circle-check me-1"></i> Kích hoạt tài khoản thành công! Vui lòng đăng nhập.
-            </div>
-        <% } %>
-        <% if ("reset_success".equals(request.getParameter("msg"))) { %>
-            <div class="alert alert-success py-2 text-center" style="font-size: 14px; border-radius: 10px;">
-                <i class="fa-solid fa-circle-check me-1"></i> Đổi mật khẩu thành công! Hãy đăng nhập lại.
-            </div>
-        <% } %>
 
-        <form action="${pageContext.request.contextPath}/login" method="post">
+        <form action="${pageContext.request.contextPath}/register" method="post">
             <div class="mb-3">
-                <label class="form-label fw-semibold text-secondary" style="font-size: 14px;">Tên đăng nhập</label>
-                <input type="text" name="username" class="form-control" placeholder="Nhập username" required>
+                <label class="form-label fw-semibold text-secondary" style="font-size: 13.5px;">Họ và tên</label>
+                <input type="text" name="fullname" class="form-control" placeholder="Nguyễn Văn A" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary" style="font-size: 13.5px;">Tên đăng nhập</label>
+                <input type="text" name="username" class="form-control" placeholder="username" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-secondary" style="font-size: 13.5px;">Email nhận mã OTP</label>
+                <input type="email" name="email" class="form-control" placeholder="name@example.com" required>
             </div>
             <div class="mb-4">
-                <label class="form-label fw-semibold text-secondary" style="font-size: 14px;">Mật khẩu</label>
+                <label class="form-label fw-semibold text-secondary" style="font-size: 13.5px;">Mật khẩu</label>
                 <input type="password" name="password" class="form-control" placeholder="••••••••" required>
             </div>
-            <button type="submit" class="btn btn-primary-custom w-100 mb-3">Đăng nhập</button>
+            <button type="submit" class="btn btn-primary-custom w-100 mb-3">Đăng ký & Nhận OTP</button>
         </form>
 
-        <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
-            <a href="${pageContext.request.contextPath}/register" class="custom-link">Đăng ký tài khoản</a>
-            <a href="${pageContext.request.contextPath}/forgot-password" class="custom-link">Quên mật khẩu?</a>
+        <div class="text-center mt-3 pt-2 border-top">
+            <span class="text-muted" style="font-size: 14px;">Đã có tài khoản?</span>
+            <a href="${pageContext.request.contextPath}/login" class="text-primary fw-semibold text-decoration-none ms-1" style="font-size: 14px;">Đăng nhập ngay</a>
         </div>
     </div>
 </div>

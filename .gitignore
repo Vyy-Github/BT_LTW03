@@ -1,6 +1,15 @@
+# Thư mục build của Maven (rất nặng, không đưa lên git)
 target/
-*.class
+*.war
+*.jar
+
+# Thư mục cấu hình của IDE
 .settings/
 .project
 .classpath
 .vscode/
+.idea/
+*.iml
+
+# Log và file tạm
+*.log

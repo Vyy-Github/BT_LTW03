@@ -9,19 +9,25 @@
         <!-- Khai báo các Entity -->
         <class>vn.iotstar.entity.Category</class>
         <class>vn.iotstar.entity.Video</class>
+        <class>vn.iotstar.entity.User</class>
+        <class>vn.iotstar.entity.Product</class>
 
         <properties>
-            <!-- Cấu hình kết nối SQL Server -->
-            <property name="jakarta.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=LTWebDB;encrypt=true;trustServerCertificate=true;"/>
-            <property name="jakarta.persistence.jdbc.user" value="sa"/>
-            <property name="jakarta.persistence.jdbc.password" value="123"/> <!-- Đổi thành mật khẩu sa của bạn -->
+            <!-- 1. Driver MySQL -->
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            
+            <!-- 2. Chuỗi kết nối MySQL (Đổi tên db nếu khác) -->
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ltwebdb?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC"/>
+            
+            <!-- 3. Tài khoản và mật khẩu MySQL Workbench/XAMPP của bạn -->
+            <property name="jakarta.persistence.jdbc.user" value="root"/>
+            <property name="jakarta.persistence.jdbc.password" value="mysql2006@"/> <!-- Đổi thành pass root của bạn (nếu dùng XAMPP thì để trống "") -->
 
-            <!-- Cấu hình Hibernate -->
+            <!-- 4. Hibernate Dialect cho MySQL -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
         </properties>
     </persistence-unit>
 </persistence>

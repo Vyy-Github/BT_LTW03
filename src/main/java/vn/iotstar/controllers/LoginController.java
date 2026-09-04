@@ -7,10 +7,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import vn.iotstar.entity.User;
+import vn.iotstar.services.IUserService;
+import vn.iotstar.services.impl.UserServiceImpl;
 
 @WebServlet(urlPatterns = { "/login", "/logout" })
 public class LoginController extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private IUserService userService = new UserServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,7 +29,6 @@ public class LoginController extends HttpServlet {
             return;
         }
 
-        // Chuyển hướng tới trang login.jsp
         req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
     }
 
@@ -35,16 +38,19 @@ public class LoginController extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        // Kiểm tra tài khoản tạm (hoặc tài khoản admin mặc định)
-        if ("admin".equals(username) && "123".equals(password)) {
-            HttpSession session = req.getSession();
-            session.setAttribute("username", username);
+        User user = userService.login(username, password);
 
-            // Đăng nhập thành công -> Chuyển hướng vào trang quản lý Category
-            resp.sendRedirect(req.getContextPath() + "/admin/categories");
+        if (user != null) {
+            HttpSession session = req.getSession();
+            session.setAttribute("account", user);
+
+            if (user.getRoleid() == 1) {
+                resp.sendRedirect(req.getContextPath() + "/admin/categories");
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/home");
+            }
         } else {
-            // Sai mật khẩu -> Gửi thông báo lỗi về lại trang login
-            req.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không chính xác!");
+            req.setAttribute("error", "Tên đăng nhập, mật khẩu sai hoặc tài khoản chưa kích hoạt OTP!");
             req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
         }
     }

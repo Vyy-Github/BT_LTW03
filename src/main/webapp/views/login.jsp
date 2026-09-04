@@ -1,128 +1,120 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng nhập tài khoản</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Đăng nhập tài khoản - TechStore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body {
-            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            background-color: #f4f6f8;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 20px;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
-        .login-card {
-            background: #ffffff;
-            border-radius: 24px;
-            padding: 40px;
-            width: 100%;
-            max-width: 440px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-        .header-icon {
-            width: 65px;
-            height: 65px;
-            background: #ffffff;
-            color: #2563eb;
+        .auth-card {
+            background: #fff;
             border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            border: 1px solid #eef2f6;
+            width: 100%;
+            max-width: 420px;
+            padding: 36px;
+        }
+        .brand-icon {
+            width: 60px;
+            height: 60px;
+            background: #fff1f2;
+            color: #d70018;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            margin: 0 auto 15px auto;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            font-size: 26px;
+            margin: 0 auto 16px auto;
+        }
+        .btn-brand {
+            background-color: #d70018;
+            color: #fff;
+            border-radius: 12px;
+            font-weight: 700;
+            padding: 10px;
+            border: none;
+            width: 100%;
+        }
+        .btn-brand:hover {
+            background-color: #b80015;
+            color: #fff;
         }
         .form-control {
-            background-color: #f1f5f9;
-            border: 1.5px solid transparent;
-            border-radius: 12px;
-            padding: 12px 16px;
-            font-size: 15px;
-            transition: all 0.2s;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 14px;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
         }
         .form-control:focus {
-            background-color: #ffffff;
-            border-color: #2563eb;
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-        }
-        .btn-primary-custom {
-            background: #2563eb;
-            border: none;
-            border-radius: 12px;
-            padding: 12px;
-            font-weight: 600;
-            color: white;
-            transition: all 0.2s;
-        }
-        .btn-primary-custom:hover {
-            background: #1d4ed8;
-            transform: translateY(-1px);
-        }
-        .custom-link {
-            color: #2563eb;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        .custom-link:hover {
-            text-decoration: underline;
-            color: #1d4ed8;
+            background-color: #fff;
+            border-color: #d70018;
+            box-shadow: 0 0 0 3px rgba(215, 0, 24, 0.15);
         }
     </style>
 </head>
 <body>
 
-<div>
-    <div class="text-center text-white mb-4">
-        <div class="header-icon">
-            <i class="fa-solid fa-graduation-cap"></i>
+<div class="auth-card">
+    <div class="text-center mb-4">
+        <div class="brand-icon">
+            <i class="fa-solid fa-mobile-screen-button"></i>
         </div>
-        <h3 class="fw-bold mb-1">Cổng Thông Tin Đăng Nhập</h3>
-        <p class="mb-0 text-white-50">Hệ Thống Quản Trị Trực Tuyến</p>
+        <h4 class="fw-bold mb-1">Đăng nhập</h4>
+        <p class="text-muted small mb-0">Đăng nhập tài khoản thành viên TechStore</p>
     </div>
 
-    <div class="login-card">
-        <h4 class="text-center fw-bold text-dark mb-4">Đăng nhập tài khoản</h4>
-
-        <% if (request.getAttribute("error") != null) { %>
-            <div class="alert alert-danger py-2 text-center" style="font-size: 14px; border-radius: 10px;">
-                <i class="fa-solid fa-circle-exclamation me-1"></i> <%= request.getAttribute("error") %>
-            </div>
-        <% } %>
-        <% if ("active_success".equals(request.getParameter("msg"))) { %>
-            <div class="alert alert-success py-2 text-center" style="font-size: 14px; border-radius: 10px;">
-                <i class="fa-solid fa-circle-check me-1"></i> Kích hoạt tài khoản thành công! Vui lòng đăng nhập.
-            </div>
-        <% } %>
-        <% if ("reset_success".equals(request.getParameter("msg"))) { %>
-            <div class="alert alert-success py-2 text-center" style="font-size: 14px; border-radius: 10px;">
-                <i class="fa-solid fa-circle-check me-1"></i> Đổi mật khẩu thành công! Hãy đăng nhập lại.
-            </div>
-        <% } %>
-
-        <form action="${pageContext.request.contextPath}/login" method="post">
-            <div class="mb-3">
-                <label class="form-label fw-semibold text-secondary" style="font-size: 14px;">Tên đăng nhập</label>
-                <input type="text" name="username" class="form-control" placeholder="Nhập username" required>
-            </div>
-            <div class="mb-4">
-                <label class="form-label fw-semibold text-secondary" style="font-size: 14px;">Mật khẩu</label>
-                <input type="password" name="password" class="form-control" placeholder="••••••••" required>
-            </div>
-            <button type="submit" class="btn btn-primary-custom w-100 mb-3">Đăng nhập</button>
-        </form>
-
-        <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
-            <a href="${pageContext.request.contextPath}/register" class="custom-link">Đăng ký tài khoản</a>
-            <a href="${pageContext.request.contextPath}/forgot-password" class="custom-link">Quên mật khẩu?</a>
+    <c:if test="${not empty alert}">
+        <div class="alert alert-danger py-2 small rounded-3 text-center mb-3">
+            <i class="fa-solid fa-circle-exclamation me-1"></i> ${alert}
         </div>
-    </div>
+    </c:if>
+
+    <form action="${pageContext.request.contextPath}/login" method="post">
+        <div class="mb-3">
+            <label class="form-label small fw-semibold text-secondary">Tên đăng nhập / Email</label>
+            <input type="text" name="username" class="form-control" placeholder="Nhập username của bạn" required autofocus>
+        </div>
+
+        <div class="mb-3">
+            <div class="d-flex justify-content-between">
+                <label class="form-label small fw-semibold text-secondary">Mật khẩu</label>
+                <a href="${pageContext.request.contextPath}/forgot-password" class="small text-danger text-decoration-none">Quên mật khẩu?</a>
+            </div>
+            <input type="password" name="password" class="form-control" placeholder="Nhập mật khẩu" required>
+        </div>
+
+        <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" name="remember" id="remember">
+            <label class="form-check-label small text-muted" for="remember">
+                Ghi nhớ đăng nhập
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-brand mb-3">ĐĂNG NHẬP</button>
+
+        <div class="text-center small text-muted">
+            Chưa có tài khoản? 
+            <a href="${pageContext.request.contextPath}/register" class="text-danger fw-semibold text-decoration-none">Đăng ký ngay</a>
+        </div>
+        <div class="text-center mt-3">
+            <a href="${pageContext.request.contextPath}/home" class="small text-secondary text-decoration-none">
+                <i class="fa-solid fa-arrow-left me-1"></i> Quay lại trang chủ
+            </a>
+        </div>
+    </form>
 </div>
 
 </body>
